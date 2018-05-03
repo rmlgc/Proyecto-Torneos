@@ -15,9 +15,31 @@ class TFormatos extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type', ['1v1', '2V2'])->default('1v1');
-            $table->enum('tematica', ['free'])->default('free');
-            $table->enum('patrones', ['4x4'])->default('4x4');
+
+            $table->integer('championship_id')->unsigned()->nullable()->index();
+            $table->foreign('type_id')
+                ->references('id')
+                ->on('championships')
+                ->onDelete('cascade');
+
+            $table->integer('type_id')->unsigned()->nullable()->index();
+            $table->foreign('type_id')
+                ->references('id')
+                ->on('type_category')
+                ->onDelete('cascade');
+
+            $table->integer('tematica_id')->unsigned()->nullable()->index();
+            $table->foreign('tematica_id')
+                ->references('id')
+                ->on('tematica_category')
+                ->onDelete('cascade');
+
+            $table->integer('patrones_id')->unsigned()->nullable()->index();
+            $table->foreign('patrones_id')
+                ->references('id')
+                ->on('patrones_category')
+                ->onDelete('cascade');
+
             $table->integer('isTeam')->unsigned()->default(0);
             $table->timestamps();
             $table->engine = 'InnoDB';
@@ -26,18 +48,27 @@ class TFormatos extends Migration
         Schema::create('championships', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->string('name');
+            $table->string('slug');
+
             $table->integer('tournament_id')->unsigned()->index();
             $table->foreign('tournament_id')
                 ->references('id')
                 ->on('tournaments')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            
-            $table->integer('category_id')->unsigned()->index();
-            $table->foreign('category_id')
+
+            $table->integer('venue_id')->nullable()->unsigned();
+            $table->foreign('venue_id')
                 ->references('id')
-                ->on('categories')
-                ->onDelete('cascade');
+                ->on('venues');
 
             $table->unique(['tournament_id', 'category_id']);
 

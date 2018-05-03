@@ -14,7 +14,7 @@ class TBatallas extends Migration
     public function up()
     {
         if (!Schema::hasTable('fights')) {
-            Schema::create('fight', function (Blueprint $table) {
+            Schema::create('fights', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('short_id')->unsigned()->nullable();
 
@@ -24,10 +24,10 @@ class TBatallas extends Migration
                     ->on('fighters_groups')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-                
+
                 $table->integer('c1')->nullable()->unsigned()->index();
                 $table->integer('c2')->nullable()->unsigned()->index();
-                
+
 /*                $table->char('point1_c1')->nullable();
                 $table->char('point2_c1')->nullable();
                 $table->char('point1_c2')->nullable();

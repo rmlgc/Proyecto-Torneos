@@ -42,7 +42,7 @@ class TCompeticionSettings extends Migration
 
             //TODO This should go in another table that is not for tree construction but for rules
             // Rules
-           
+
             $table->smallInteger('cost')->nullable(); // Cost of competition
 
             $table->timestamps();

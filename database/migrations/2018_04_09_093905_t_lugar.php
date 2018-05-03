@@ -15,7 +15,7 @@ class TLugar extends Migration
     {
         Schema::create('venues', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('venue_name');
+            $table->string('venue_name')->unique();
             $table->string('address')->nullable();
             $table->string('details')->nullable();
             $table->string('city')->nullable();

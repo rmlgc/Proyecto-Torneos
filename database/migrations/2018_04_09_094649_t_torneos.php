@@ -16,7 +16,7 @@ class TTorneos extends Migration
         Schema::create('tournaments', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->Integer('user_id')->unsigned()->nullable()->index();
+            $table->Integer('user_id');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
@@ -25,19 +25,19 @@ class TTorneos extends Migration
 
             $table->string('name');
             $table->string('slug')->unique();
-            $table->date('dateIni')->useCurrent();
-            $table->date('dateFin');
+            $table->date('dateIni')->nullable();
+            $table->date('dateFin')->nullable();
             $table->string('promoter')->nullable();
             $table->string('host_organization')->nullable();
             $table->integer('rule_id')->default(1);
             $table->enum('type', ['open', 'invitation']);
-            $table->enum('level', ['ND', 'local', 'municipal', 'regional', 'nacional', 'internacional' ]
-            )->default('local');
 
-            $table->integer('venue_id')->nullable()->unsigned();
-            $table->foreign('venue_id')
+            $table->Integer('level_id')->unsigned()->nullable()->index();
+            $table->foreign('level_id')
                 ->references('id')
-                ->on('venues');
+                ->on('tournament_level')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

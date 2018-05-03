@@ -1,13 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <ul class="nav">
-        <li class=" mr-20">
-            <a href="" class="navbar-right btn border-warning text-primary ">Create Tournament
-            </a>
-        </li>
-    </ul>
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -19,8 +13,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
 
 
                 </div>
